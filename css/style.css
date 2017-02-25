@@ -1,14 +1,26 @@
 
+@keyframes fadein {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 html, body {
 	margin: 0;
 	padding: 0;
 	min-height: 100vh;
 	background-color: #fff;
+	animation: fadein 0.5s;
 }
 
 :root {
 	font-size: 16px;
 	color: #333;
+	font-family: Roboto, sans-serif;
+	-webkit-user-select: none;
 }
 
 * {
@@ -32,4 +44,30 @@ input {
 	border: none;
 	outline: none;
 	background-color: transparent;
+}
+
+.sidebar-button {
+	position: relative;
+	transition: background-color .2s ease-in-out;
+}
+
+.sidebar-button::before {
+	content: ' ';
+	position:absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 3px;
+	background-color: #fff;
+	opacity: 0;
+	transition: opacity .2s ease-in-out;
+	will-change: opacity;
+}
+
+.sidebar-button:hover {
+	background-color: rgba(255,255,255,.3);
+}
+
+.sidebar-button:hover::before {
+	opacity: 1;
 }

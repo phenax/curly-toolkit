@@ -26,32 +26,26 @@ export default class Sidebar extends React.Component {
 			height: '20px',
 			borderRadius: '50%',
 			fontSize: '.5em',
-			marginRight: '.3em',
-			backgroundColor: colors.primary,
-			color: '#fff'
-		},
-
-		actions__btn__close: {
-			// color: colors.close__text,
-		},
-		actions__btn__max: {
-			// color: colors.maximize__text,
-			// backgroundColor: colors.maximize,
-		},
-		actions__btn__min: {
-			// color: colors.minimize__text,
-			// backgroundColor: colors.minimize,
+			marginRight: '.4em',
+			backgroundColor: '#fff',
+			color: colors.primary,
 		},
 
 
 		list: {
-			padding: '1em 0'
+			marginTop: '2em',
+			padding: '1em 0 1em',
 		},
 
 		list__item: {
 			display: 'block',
 			width: '100%',
 			color: '#fff',
+			textAlign: 'left',
+			padding: '.3em 2em',
+			fontSize: '.9em',
+			fontFamily: 'Roboto Condensed',
+			textTransform: 'uppercase',
 		}
 	};
 
@@ -81,19 +75,19 @@ export default class Sidebar extends React.Component {
 
 					<button
 						onClick={this._closeBtnClickHandler}
-						style={assign({}, Sidebar.styles.actions__btn, Sidebar.styles.actions__btn__close)}
+						style={Sidebar.styles.actions__btn}
 						className='fa fa-close'
 					/>
 
 					<button
 						onClick={this._minimizeBtnClickHandler}
-						style={assign({}, Sidebar.styles.actions__btn, Sidebar.styles.actions__btn__min)}
+						style={Sidebar.styles.actions__btn}
 						className='fa fa-minus'
 					/>
 
 					<button
 						onClick={this._maximizeBtnClickHandler}
-						style={assign({}, Sidebar.styles.actions__btn, Sidebar.styles.actions__btn__max)}
+						style={Sidebar.styles.actions__btn}
 						className='fa fa-window-maximize'
 					/>
 
@@ -101,9 +95,21 @@ export default class Sidebar extends React.Component {
 
 				<ul style={Sidebar.styles.list}>
 					<li>
-						<button style={Sidebar.styles.list__item}>Home</button>
-						<button style={Sidebar.styles.list__item}>Coolness</button>
-						<button style={Sidebar.styles.list__item}>Wowlo</button>
+						<button
+							className='sidebar-button'
+							style={Sidebar.styles.list__item}>
+							Home
+						</button>
+						<button
+							className='sidebar-button'
+							style={Sidebar.styles.list__item}>
+							Coolness
+						</button>
+						<button
+							className='sidebar-button'
+							style={Sidebar.styles.list__item}>
+							Wowlo
+						</button>
 					</li>
 				</ul>
 			</div>
