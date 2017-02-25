@@ -14,6 +14,7 @@ export default class App extends React.Component {
 			display: 'flex',
 			flexDirection: 'row',
 			alignItems: 'stretch',
+			backgroundColor: '#eee',
 		},
 
 		sidebar: {
@@ -25,8 +26,9 @@ export default class App extends React.Component {
 		handle: {
 			WebkitAppRegion: 'drag',
 			width: '100%',
-			padding: '1em',
+			padding: '1em 2em',
 			color: '#fff',
+			fontFamily: 'Roboto Condensed',
 			backgroundColor: colors.primary,
 			boxShadow: '0 2px 4px 1px rgba(0, 0, 0, 0.14)',
 		},
@@ -34,22 +36,31 @@ export default class App extends React.Component {
 		content: {
 			width: '100%',
 			minHeight: '100vh',
-			boxShadow: '0 0 4px 1px rgba(0, 0, 0, 0.1)'
+			boxShadow: '-1px 0 5px 3px rgba(0, 0, 0, 0.2)'
 		}
 	};
 
+
 	render() {
+
 		return (
+
 			<div style={App.styles.container}>
+
 				<div style={App.styles.sidebar}>
+
 					<Sidebar />
+
 				</div>
+
 				<div style={App.styles.content}>
-					<div style={App.styles.handle}>
-						Curly
-					</div>
+
+					<div style={App.styles.handle}>Curly</div>
+
 					<Content />
+
 				</div>
+
 			</div>
 		);
 	}

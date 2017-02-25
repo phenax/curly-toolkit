@@ -49,28 +49,27 @@ export default class Sidebar extends React.Component {
 		}
 	};
 
+
 	constructor(props) {
 		super(props);
 
 		this._closeBtnClickHandler= this._closeBtnClickHandler.bind(this);
+		this._minimizeBtnClickHandler= this._minimizeBtnClickHandler.bind(this);
+		this._maximizeBtnClickHandler= this._maximizeBtnClickHandler.bind(this);
 	}
 
 
-	_closeBtnClickHandler() {
-		ipcRenderer.send('close-main-window');
-	}
+	_closeBtnClickHandler() { ipcRenderer.send('close-main-window'); }
+	_minimizeBtnClickHandler() { ipcRenderer.send('min-main-window'); }
+	_maximizeBtnClickHandler() { ipcRenderer.send('max-main-window'); }
 
-	_minimizeBtnClickHandler() {
-		ipcRenderer.send('min-main-window');
-	}
-
-	_maximizeBtnClickHandler() {
-		ipcRenderer.send('max-main-window');
-	}
 
 	render() {
+
 		return (
+
 			<div style={Sidebar.styles.wrapper}>
+
 				<div style={Sidebar.styles.actions}>
 
 					<button
@@ -93,25 +92,31 @@ export default class Sidebar extends React.Component {
 
 				</div>
 
+
 				<ul style={Sidebar.styles.list}>
 					<li>
 						<button
-							className='sidebar-button'
+							className='sidebar-btn'
 							style={Sidebar.styles.list__item}>
 							Home
 						</button>
+					</li>
+					<li>
 						<button
-							className='sidebar-button'
+							className='sidebar-btn'
 							style={Sidebar.styles.list__item}>
 							Coolness
 						</button>
+					</li>
+					<li>
 						<button
-							className='sidebar-button'
+							className='sidebar-btn'
 							style={Sidebar.styles.list__item}>
 							Wowlo
 						</button>
 					</li>
 				</ul>
+
 			</div>
 		);
 	}

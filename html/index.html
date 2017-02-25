@@ -13,7 +13,10 @@
 
 		<script>
 			require('babel-core/register');
-			require('../renderer/main.js');
+
+			setTimeout(() => {
+				require('../renderer/main.js');
+			}, 0);
 		</script>
 	</body>
 </html>

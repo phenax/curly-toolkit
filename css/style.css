@@ -46,12 +46,12 @@ input {
 	background-color: transparent;
 }
 
-.sidebar-button {
+.sidebar-btn {
 	position: relative;
 	transition: background-color .2s ease-in-out;
 }
 
-.sidebar-button::before {
+.sidebar-btn::before {
 	content: ' ';
 	position:absolute;
 	left: 0;
@@ -64,10 +64,10 @@ input {
 	will-change: opacity;
 }
 
-.sidebar-button:hover {
+.sidebar-btn:hover {
 	background-color: rgba(255,255,255,.3);
 }
 
-.sidebar-button:hover::before {
+.sidebar-btn:hover::before {
 	opacity: 1;
 }

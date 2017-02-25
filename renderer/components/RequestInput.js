@@ -1,6 +1,8 @@
 
 import React from 'react';
 
+import DataFieldList from './DataFieldList';
+
 import colors from '../constants/colors';
 
 export default class RequestInput extends React.Component {
@@ -11,9 +13,25 @@ export default class RequestInput extends React.Component {
 			position: 'relative',
 		},
 
+		urlInputWrapper: {
+			display: 'flex',
+			flexDirection: 'row',
+		},
+
 		input: {
-			fontSize: '1.1em',
-			padding: '.8em 1em',
+			fontSize: '.9em',
+			padding: '.6em 1em',
+			flex: 4,
+			border: '1px solid #ddd',
+		},
+
+		submitBtn: {
+			flex: 1,
+			backgroundColor: colors.accent_blue,
+			color: '#fff',
+			fontFamily: 'Roboto Condensed',
+			textTransform: 'uppercase',
+			fontWeight: 'bold',
 		},
 	};
 
@@ -30,70 +48,65 @@ export default class RequestInput extends React.Component {
 
 	_onSubmitHandler(e) {
 		e.preventDefault();
-		const $form= this.refs.formWrapper;
 
-		const data= new FormData($form);
-		console.log(data.get('url'));
+		const $wrapper= this.refs.formWrapper;
 
-		const $keys= Array.from($form.querySelectorAll('.js-data__key'));
-		const $values= Array.from($form.querySelectorAll('.js-data__value'));
+		const $keys= Array.from($wrapper.querySelectorAll('.js-data__key'));
+		const $values= Array.from($wrapper.querySelectorAll('.js-data__value'));
 
 		const requestData= {};
 
 		$keys.forEach((key, i) => {
 
-			const value= $values[i];
-			
+			const {value}= $values[i];
+
 			if(!!key && !!value) {
-				requestData[key]= value;
+				requestData[key.value]= value;
 			}
 		});
 
 		console.log(requestData);
 	}
 
+	_updateState(newState) { this.setState(newState); }
+
+
 	_addRequestField() {
-		this.state.requestData.push({
+		
+		const requestData= Array.from(this.state.requestData);
+
+		requestData.push({
 			key: '',
 			value: ''
 		});
 
-		this.setState({ requestData: this.state.requestData });
+		this.setState({ requestData });
 	}
+
 
 	render() {
 
-		const requestFields= this.state.requestData.map((data, i) => (
-			<li key={i}>
-				<input
-					type='text'
-					className='js-data__key'
-					placeholder='Key'
-					value={data.key}
-				/>
-				<input
-					type='text'
-					className='js-data__value'
-					placeholder='Value'
-					value={data.value}
-				/>
-			</li>
-		));
-
 		return (
+
 			<div style={RequestInput.styles.wrapper}>
+
 				<div ref='formWrapper'>
 
-					<input
-						type='text' name='url'
-						style={RequestInput.styles.input}
-						placeholder='Enter URL..'
-					/>
+					<div style={RequestInput.styles.urlInputWrapper}>
 
-					<ul>{ requestFields }</ul>
+						<input
+							type='text' name='url'
+							style={RequestInput.styles.input}
+							placeholder='Enter URL..'
+						/>
+
+						<button onClick={this._onSubmitHandler} style={RequestInput.styles.submitBtn}>Submit</button>
+					</div>
+
+					<DataFieldList requestData={this.state.requestData} updateState={this._updateState.bind(this)} />
+
 					<button onClick={this._addRequestField}>Add field</button>
 
-					<button onClick={this._onSubmitHandler}>Submit</button>
 				</div>
 			</div>
 		);

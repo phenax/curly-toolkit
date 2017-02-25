@@ -15,13 +15,14 @@ export default class Content extends React.Component {
 		},
 
 		container: {
-			padding: '1em',
-			margin: '0 auto',
+			margin: '1em auto',
 		}
 	};
 
 	render() {
+
 		return (
+
 			<div style={Content.styles.wrapper}>
 				
 				<div style={Content.styles.container}>
@@ -29,6 +30,7 @@ export default class Content extends React.Component {
 					<RequestInput />
 
 				</div>
+
 			</div>
 		);
 	}
