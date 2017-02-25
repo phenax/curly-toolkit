@@ -17,7 +17,7 @@ export default class App extends React.Component {
 		},
 
 		sidebar: {
-			backgroundColor: colors.primary,
+			background: `linear-gradient(-180deg, #34b8be 10%, ${colors.accent_blue} 50%)`,
 			width: '300px',
 			minHeight: '100vh'
 		},
@@ -26,12 +26,15 @@ export default class App extends React.Component {
 			WebkitAppRegion: 'drag',
 			width: '100%',
 			padding: '1em',
-			backgroundColor: colors.accent_blue,
+			color: '#fff',
+			backgroundColor: colors.primary,
+			boxShadow: '0 2px 4px 1px rgba(0, 0, 0, 0.14)',
 		},
 
 		content: {
 			width: '100%',
 			minHeight: '100vh',
+			boxShadow: '0 0 4px 1px rgba(0, 0, 0, 0.1)'
 		}
 	};
 

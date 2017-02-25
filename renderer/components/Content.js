@@ -1,6 +1,8 @@
 
 import React from 'react';
 
+import RequestInput from './RequestInput';
+
 import colors from '../constants/colors';
 
 export default class Content extends React.Component {
@@ -13,11 +15,8 @@ export default class Content extends React.Component {
 		},
 
 		container: {
-			backgroundColor: '#fff',
-			padding: '2em 1em',
-			borderRadius: '3px',
-			boxShadow: '0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2)',
-			margin: '1em auto',
+			padding: '1em',
+			margin: '0 auto',
 		}
 	};
 
@@ -26,7 +25,9 @@ export default class Content extends React.Component {
 			<div style={Content.styles.wrapper}>
 				
 				<div style={Content.styles.container}>
-					Content
+
+					<RequestInput />
+
 				</div>
 			</div>
 		);
