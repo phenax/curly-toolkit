@@ -6,6 +6,7 @@
         "node": true
     },
     "extends": "eslint:recommended",
+    "parser": "babel-eslint",
     "installedESLint": true,
     "parserOptions": {
         "ecmaFeatures": {
@@ -33,6 +34,7 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "no-unused-vars": [ "off" ]
     }
 }

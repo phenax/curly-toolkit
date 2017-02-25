@@ -5,6 +5,8 @@ const electron=  require('electron');
 
 const {app, ipcMain, BrowserWindow}= electron;
 
+const {closeWindow}= require('./main/ipc-actions');
+
 
 /**
  * Main window instance
@@ -27,7 +29,7 @@ const initMainWindow= () => {
 
 	// mainWindow.maximize();
 
-	mainWindow.webContents.openDevTools();
+	// mainWindow.webContents.openDevTools();
 
 	mainWindow.loadURL(url.format({
 		pathname: path.resolve('html', 'index.html'),
@@ -41,14 +43,7 @@ const initMainWindow= () => {
 };
 
 
-ipcMain.on('close-main-window', () => {
-
-	if(mainWindow)
-		mainWindow.close();
-
-	mainWindow= null;
-});
-
+ipcMain.on('close-main-window', () => closeWindow(mainWindow));
 
 
 app
