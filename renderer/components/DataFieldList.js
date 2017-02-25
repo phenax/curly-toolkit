@@ -42,7 +42,10 @@ export default class DataFieldList extends React.Component {
 		this.props.updateState({ requestData });
 	}
 
-	
+
+	_addRequestField() {
+		this._mutateRequestFields(fields => fields.push({ key: '', value: '' }));
+	}	
 
 	_removeRequestField(i) {
 		this._mutateRequestFields(fields => fields.splice(i, 1));
@@ -57,38 +60,43 @@ export default class DataFieldList extends React.Component {
 	render() {
 
 		return (
-			<ul style={DataFieldList.styles.list}>
+			<div>
 
-				{this.props.requestData.map((data, i) => (
+				<ul style={DataFieldList.styles.list}>
 
-					<li key={i} style={DataFieldList.styles.requstInput}>
+					{this.props.requestData.map((data, i) => (
 
-						<input
-							style={DataFieldList.styles.requstInput__field}
-							type='text'
-							className='js-data__key'
-							placeholder='Key'
-							onChange={this._requestValueChange.bind(this, i, 'key')}
-							value={data.key}
-						/>
-						<input
-							style={DataFieldList.styles.requstInput__field}
-							type='text'
-							className='js-data__value'
-							placeholder='Value'
-							onChange={this._requestValueChange.bind(this, i, 'value')}
-							value={data.value}
-						/>
+						<li key={i} style={DataFieldList.styles.requstInput}>
 
-						<button
-							style={DataFieldList.styles.requstInput__closeBtn}
-							onClick={this._removeRequestField.bind(this, i)}
-							className='fa fa-close'
-						/>
+							<input
+								style={DataFieldList.styles.requstInput__field}
+								type='text'
+								className='js-data__key'
+								placeholder='Key'
+								onChange={this._requestValueChange.bind(this, i, 'key')}
+								value={data.key}
+							/>
+							<input
+								style={DataFieldList.styles.requstInput__field}
+								type='text'
+								className='js-data__value'
+								placeholder='Value'
+								onChange={this._requestValueChange.bind(this, i, 'value')}
+								value={data.value}
+							/>
 
-					</li>
-				))}
-			</ul>
+							<button
+								style={DataFieldList.styles.requstInput__closeBtn}
+								onClick={this._removeRequestField.bind(this, i)}
+								className='fa fa-close'
+							/>
+
+						</li>
+					))}
+				</ul>
+
+				<button onClick={this._addRequestField.bind(this)}>Add field</button>
+			</div>
 		);
 	}
 }

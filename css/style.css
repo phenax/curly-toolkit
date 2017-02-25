@@ -71,3 +71,32 @@ input {
 .sidebar-btn:hover::before {
 	opacity: 1;
 }
+
+
+.ReactTabs {
+	margin: 1em auto;
+	border-bottom: 1px solid #bbb;
+	opacity: .99;
+}
+
+.ReactTabs__TabList {
+	border-bottom: 2px solid #eee;
+}
+
+.ReactTabs__Tab {
+	
+}
+
+.ReactTabs__Tab--selected {
+	background: #eee !important;
+	border-radius: 0 !important;
+
+}
+
+.ReactTabs__TabPanel {
+	padding: 1em;
+}
+
+.ReactTabs__TabPanel--selected {
+
+}

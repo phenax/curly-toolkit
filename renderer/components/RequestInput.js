@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import DataFieldList from './DataFieldList';
 
@@ -43,7 +44,6 @@ export default class RequestInput extends React.Component {
 		};
 		
 		this._onSubmitHandler= this._onSubmitHandler.bind(this);
-		this._addRequestField= this._addRequestField.bind(this);
 	}
 
 	_onSubmitHandler(e) {
@@ -71,19 +71,6 @@ export default class RequestInput extends React.Component {
 	_updateState(newState) { this.setState(newState); }
 
 
-	_addRequestField() {
-		
-		const requestData= Array.from(this.state.requestData);
-
-		requestData.push({
-			key: '',
-			value: ''
-		});
-
-		this.setState({ requestData });
-	}
-
-
 	render() {
 
 		return (
@@ -103,9 +90,23 @@ export default class RequestInput extends React.Component {
 						<button onClick={this._onSubmitHandler} style={RequestInput.styles.submitBtn}>Submit</button>
 					</div>
 
-					<DataFieldList requestData={this.state.requestData} updateState={this._updateState.bind(this)} />
-
-					<button onClick={this._addRequestField}>Add field</button>
+					<Tabs>
+						<TabList>
+							<Tab>Body</Tab>
+							<Tab>Headers</Tab>
+							<Tab>Another one</Tab>
+						</TabList>
+						
+						<TabPanel>
+							<DataFieldList requestData={this.state.requestData} updateState={this._updateState.bind(this)} />
+						</TabPanel>
+						<TabPanel>
+							HGaderss pleasgolder
+						</TabPanel>
+						<TabPanel>
+							Something
+						</TabPanel>
+					</Tabs>
 
 				</div>
 			</div>
