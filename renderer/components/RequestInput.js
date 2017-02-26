@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import {ipcRenderer} from 'electron';
 
 import DataFieldList from './DataFieldList';
 
@@ -78,7 +77,10 @@ export default class RequestInput extends React.Component {
 		],
 		headers: [
 			{ key: '', value: '' },
-		]
+		],
+		response: {
+
+		}
 	};
 
 
@@ -104,22 +106,7 @@ export default class RequestInput extends React.Component {
 			headers: Fetcher.hashMapify(this.state.headers),
 		};
 
-		const fetcher= new Fetcher(request);
-
-		fetcher
-			.send()
-			.then(response => {
-
-				console.log(response.status);
-				console.log(response.headers.get('Content-Type'));
-
-				return response.json();
-			})
-			.then(response => {
-
-				console.log(response);
-			})
-			.catch(console.error);
+		this.props.onSubmit(request);
 	}
 
 	updateState(newState) { this.setState(newState); }

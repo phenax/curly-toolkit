@@ -23,8 +23,4 @@ module.exports= {
 				_window.maximize();
 		}
 	},
-
-	fetchRequest(e) {
-
-	}
 };

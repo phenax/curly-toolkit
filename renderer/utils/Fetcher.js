@@ -57,17 +57,37 @@ export default class Fetched {
 	 * @return {Request}
 	 */
 	static sanitizeRequest(request) {
+
 		request= assign({}, request);
 
 		request.headers= Fetched.sanitizeHeaders(request.headers);
-		
+
 		if(request.method.toLowerCase() === 'get') {
+
 			const reqUrl= url.parse(request.url, true);
 			const query= assign(reqUrl.query, request.body);
 			const queryStr= queryString.stringify(reqUrl.query);
 
 			request.url=
-				`${(reqUrl.protocol || 'http:')}//${reqUrl.host + reqUrl.pathname}?${queryStr}`;
+				(reqUrl.protocol || 'http:') + '//' + 
+				reqUrl.host + reqUrl.pathname + 
+				(queryStr? '?'+queryStr: '');
+
+		} else {
+
+			// If the body is not formdata, make it formdata
+			if(!FormData.prototype.isPrototypeOf(request.body)) {
+
+				const formData= Object.keys(request.body).reduce((formData, key) => {
+
+					formData.append(key, request.body[key]);
+
+					return formData;
+
+				}, new FormData());
+
+				request.body= formData;
+			}
 		}
 
 		return new Request(request.url, request);
