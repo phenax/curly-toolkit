@@ -8,7 +8,8 @@ const {app, ipcMain, BrowserWindow}= electron;
 const {
 	closeWindow,
 	minimizeWindow,
-	maximizeWindow
+	maximizeWindow,
+	fetchRequest
 }= require('./main/ipc-actions');
 
 
@@ -50,6 +51,7 @@ const initMainWindow= () => {
 ipcMain.on('close-main-window', () => closeWindow(mainWindow));
 ipcMain.on('min-main-window', () => minimizeWindow(mainWindow));
 ipcMain.on('max-main-window', () => maximizeWindow(mainWindow));
+ipcMain.on('fetch-request', fetchRequest);
 
 
 app

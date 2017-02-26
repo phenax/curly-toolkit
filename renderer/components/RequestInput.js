@@ -1,8 +1,11 @@
 
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import {ipcRenderer} from 'electron';
 
 import DataFieldList from './DataFieldList';
+
+import Fetcher from '../utils/Fetcher';
 
 import colors from '../constants/colors';
 
@@ -46,7 +49,7 @@ export default class RequestInput extends React.Component {
 			backgroundColor: 'rgba(0,0,0,.05)',
 		},
 
-		requestWrapper: {
+		uiCard: {
 			margin: '1em 0',
 			padding: '1em',
 			backgroundColor: '#fff',
@@ -88,28 +91,28 @@ export default class RequestInput extends React.Component {
 		this.onTabSelect= this.onTabSelect.bind(this);
 	}
 
-
 	// Form submit handler(Submit button click)
 	_onSubmitHandler(e) {
 		e.preventDefault();
 
 		const $wrapper= this.refs.formWrapper;
 
-		const $keys= Array.from($wrapper.querySelectorAll('.js-data__key'));
-		const $values= Array.from($wrapper.querySelectorAll('.js-data__value'));
+		const request= {
+			url:     this.refs.urlField.value,
+			method:  this.requestMethods[this.refs.methodField.value],
+			body:    Fetcher.hashMapify(this.state.requestData),
+			headers: Fetcher.hashMapify(this.state.headers),
+		};
 
-		const requestData= {};
+		const fetcher= new Fetcher(request);
 
-		$keys.forEach((key, i) => {
+		fetcher
+			.send('json')
+			.then(response => {
 
-			const {value}= $values[i];
-
-			if(!!key && !!value) {
-				requestData[key.value]= value;
-			}
-		});
-
-		console.log(requestData);
+				console.log(response);
+			})
+			.catch(console.error);
 	}
 
 	updateState(newState) { this.setState(newState); }
@@ -123,7 +126,6 @@ export default class RequestInput extends React.Component {
 
 		const $tabs= this.refs.formWrapper.querySelectorAll('.ReactTabs__Tab');
 		const $tabList= this.refs.formWrapper.querySelector('.ReactTabs__TabList');
-		const $tabBorder= this.refs.jsTabBorder;
 
 		const $nextTab= $tabs[nextIndex];
 
@@ -139,7 +141,7 @@ export default class RequestInput extends React.Component {
 				// Skip another frame
 				requestAnimationFrame(() => {
 
-					$tabBorder.style.transform= `
+					this.refs.jsTabBorder.style.transform= `
 						translateX(${bounds.left - wrapperBounds.left}px)
 						scaleX(${bounds.width})
 					`;
@@ -151,11 +153,6 @@ export default class RequestInput extends React.Component {
 
 	render() {
 
-		const requestMethodOptions=
-			this.requestMethods.map((method, i) => (
-				<option value={i} key={i}>{method}</option>
-			));
-
 		return (
 
 			<div style={RequestInput.styles.wrapper}>
@@ -164,21 +161,29 @@ export default class RequestInput extends React.Component {
 
 					<div style={RequestInput.styles.urlInputWrapper}>
 
-						<select style={RequestInput.styles.select}>
-							{requestMethodOptions}
+						<select style={RequestInput.styles.select} ref='methodField'>
+							{this.requestMethods.map((method, i) => (
+								<option value={i} key={i}>{method}</option>
+							))}
 						</select>
 
 						<input
-							type='text' name='url'
+							type='text' ref='urlField'
 							style={RequestInput.styles.input}
 							placeholder='Enter URL..'
 						/>
 
-						<button onClick={this._onSubmitHandler} style={RequestInput.styles.submitBtn}>Submit</button>
+						<button
+							onClick={this._onSubmitHandler}
+							style={RequestInput.styles.submitBtn}>
+							Submit
+						</button>
 					</div>
 
 
-					<div style={RequestInput.styles.requestWrapper}>
+					{ /* Request config card */ }
+					<div style={RequestInput.styles.uiCard}>
+
 						<Tabs onSelect={this.onTabSelect}>
 							<TabList>
 								<Tab>Body</Tab>
@@ -186,7 +191,9 @@ export default class RequestInput extends React.Component {
 								<Tab>Authorization</Tab>
 								<div ref='jsTabBorder' className='ReactTabs-border' />
 							</TabList>
-							
+
+
+							{ /* Request data fields */ }
 							<TabPanel>
 								<DataFieldList
 									type='requestData'
@@ -194,6 +201,7 @@ export default class RequestInput extends React.Component {
 									updateState={this.updateState.bind(this)}
 								/>
 							</TabPanel>
+							{ /* Header fields */ }
 							<TabPanel>
 								<DataFieldList
 									type='headers'
@@ -201,6 +209,7 @@ export default class RequestInput extends React.Component {
 									updateState={this.updateState.bind(this)}
 								/>
 							</TabPanel>
+							{ /* Authorization */ }
 							<TabPanel>
 								Something
 							</TabPanel>

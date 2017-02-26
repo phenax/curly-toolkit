@@ -22,5 +22,9 @@ module.exports= {
 				_window.unmaximize():
 				_window.maximize();
 		}
+	},
+
+	fetchRequest(e) {
+
 	}
 };
