@@ -43,25 +43,36 @@ export default class ResponseOutput extends React.Component {
 
 						{ /* Request data fields */ }
 						<TabPanel>
-							<pre className='codeblock selectable' style={ResponseOutput.styles.responseOutput}>
-								{typeof this.props.response.body === 'object'?
-									JSON.stringify(this.props.response.body, null, 3):
-									this.props.response.body}
-							</pre>
+							{
+								this.props.showOutput?
+									<pre className='codeblock selectable' style={ResponseOutput.styles.responseOutput}>
+										{typeof this.props.response.body === 'object'?
+											JSON.stringify(this.props.response.body, null, 3):
+											this.props.response.body}
+									</pre>: null
+							}
 						</TabPanel>
 
 						{ /* Header fields */ }
 						<TabPanel>
-							<pre className='codeblock selectable' style={ResponseOutput.styles.responseOutput}>
-								{typeof this.props.response.headers === 'object'?
-									JSON.stringify(this.props.response.headers, null, 3):
-									this.props.response.headers}
-							</pre>
+							{
+								this.props.showOutput?
+									<pre className='codeblock selectable' style={ResponseOutput.styles.responseOutput}>
+										{typeof this.props.response.headers === 'object'?
+											JSON.stringify(this.props.response.headers, null, 3):
+											this.props.response.headers}
+									</pre>: null
+							}
 						</TabPanel>
 
 						{ /* Authorization */ }
 						<TabPanel>
-							Something more
+							{
+								this.props.showOutput?
+									<div>
+										Something
+									</div>: null
+							}
 						</TabPanel>
 					</Tabs>
 				</div>

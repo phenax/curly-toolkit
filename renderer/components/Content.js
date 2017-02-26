@@ -100,7 +100,7 @@ export default class Content extends React.Component {
 		return (
 
 			<div style={Content.styles.wrapper}>
-				
+
 				<div style={Content.styles.container}>
 
 					<RequestInput
