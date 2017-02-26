@@ -37,15 +37,36 @@ export default class Content extends React.Component {
 
 		const fetcher= new Fetcher(request);
 
+		this.setState({ showOutput: false });
+
 		fetcher
 			.send()
 			.then(response => {
 
-				console.log(response.status);
-				console.log(response.headers.get('Content-Type'));
-				response.text().then(console.log);
+				const responseData= {
+					status: response.status,
+					headers: Array
+						.from(response.headers.keys())
+						.reduce(
+							(obj, key) => {
+								obj[key]= response.headers.get(key);
+								return obj;
+							}, {}
+						),
+				};
+
+				response.text()
+					.then(data => {
+						responseData.body= data;
+						this.setState({ response: responseData });
+					});
 			})
-			.catch(console.error);
+			.catch(e => {
+				return e;
+			})
+			.then(() => {
+				this.setState({ showOutput: true });
+			});
 	}
 
 	render() {
