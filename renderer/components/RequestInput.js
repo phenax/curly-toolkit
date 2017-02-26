@@ -143,31 +143,7 @@ export default class RequestInput extends React.Component {
 
 
 	onTabSelect(nextIndex, prevIndex) {
-
-		const $tabs= this.refs.formWrapper.querySelectorAll('.ReactTabs__Tab');
-		const $tabList= this.refs.formWrapper.querySelector('.ReactTabs__TabList');
-
-		const $nextTab= $tabs[nextIndex];
-
-		if($nextTab) {
-
-			const bounds= $nextTab.getBoundingClientRect();
-
-			// Wait for the next frame
-			requestAnimationFrame(() => {
-				
-				const wrapperBounds= $tabList.getBoundingClientRect();
-
-				// Skip another frame
-				requestAnimationFrame(() => {
-
-					this.refs.jsTabBorder.style.transform= `
-						translateX(${bounds.left - wrapperBounds.left}px)
-						scaleX(${bounds.width})
-					`;
-				});
-			});
-		}
+		this.props.onTabSelect(nextIndex, prevIndex, this);
 	}
 
 

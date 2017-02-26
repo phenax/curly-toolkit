@@ -33,6 +33,34 @@ export default class Content extends React.Component {
 		this.onSubmit= this.onSubmit.bind(this);
 	}
 
+	onTabSelect(nextIndex, prevIndex, context) {
+
+		const $tabs= context.refs.formWrapper.querySelectorAll('.ReactTabs__Tab');
+		const $tabList= context.refs.formWrapper.querySelector('.ReactTabs__TabList');
+
+		const $nextTab= $tabs[nextIndex];
+
+		if($nextTab) {
+
+			const bounds= $nextTab.getBoundingClientRect();
+
+			// Wait for the next frame
+			requestAnimationFrame(() => {
+				
+				const wrapperBounds= $tabList.getBoundingClientRect();
+
+				// Skip another frame
+				requestAnimationFrame(() => {
+
+					context.refs.jsTabBorder.style.transform= `
+						translateX(${bounds.left - wrapperBounds.left}px)
+						scaleX(${bounds.width})
+					`;
+				});
+			});
+		}
+	}
+
 	onSubmit(request) {
 
 		const fetcher= new Fetcher(request);
@@ -61,12 +89,8 @@ export default class Content extends React.Component {
 						this.setState({ response: responseData });
 					});
 			})
-			.catch(e => {
-				return e;
-			})
-			.then(() => {
-				this.setState({ showOutput: true });
-			});
+			.catch(e => e)
+			.then(() => this.setState({ showOutput: true }));
 	}
 
 	render() {
@@ -77,9 +101,16 @@ export default class Content extends React.Component {
 				
 				<div style={Content.styles.container}>
 
-					<RequestInput onSubmit={this.onSubmit} />
+					<RequestInput
+						onSubmit={this.onSubmit}
+						onTabSelect={this.onTabSelect}
+					/>
 
-					<ResponseOutput response={this.state.response} showOutput={this.state.showOutput} />
+					<ResponseOutput
+						response={this.state.response}
+						onTabSelect={this.onTabSelect}
+						showOutput={this.state.showOutput}
+					/>
 
 				</div>
 

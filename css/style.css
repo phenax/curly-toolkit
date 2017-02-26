@@ -46,6 +46,16 @@ input {
 	background-color: transparent;
 }
 
+iframe, textarea, input, .selectable {
+	-webkit-user-select: text;
+}
+
+pre {
+	overflow-x: scroll;
+}
+
+
+
 select {
 	border: none;
 	outline: none;
@@ -130,4 +140,10 @@ option {
 
 .ReactTabs__TabPanel--selected {
 
+}
+
+.codeblock {
+	position: relative;
+	width: 100%;
+	max-width: 100%;
 }

@@ -4,48 +4,58 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import RequestInput from './RequestInput';
 
-const ResponseOutput= ({ response, showOutput }) => (
-	<div style={{ opacity: (showOutput)? 1: 0.3 }}>
-		Showing the output
 
-		{console.log(response.headers)? '': ''}
+export default class ResponseOutput extends React.Component {
 
-		{ /* Request config card */ }
-		<div style={RequestInput.styles.uiCard}>
+	componentDidMount() {
+		this.onTabSelect(0);
+	}
 
-			<Tabs>
-				<TabList>
-					<Tab>Body</Tab>
-					<Tab>Headers</Tab>
-					<Tab>More</Tab>
-					<div className='ReactTabs-border' />
-				</TabList>
+	onTabSelect(i, j) {
+		this.props.onTabSelect(0, null, this);
+	}
+
+	render() {
+
+		return (
+			<div style={{ opacity: (this.props.showOutput)? 1: 0.3 }} ref='formWrapper'>
+
+				{ /* Request config card */ }
+				<div style={RequestInput.styles.uiCard}>
+
+					<Tabs onSelect={this.onTabSelect.bind(this)}>
+						<TabList>
+							<Tab>Body</Tab>
+							<Tab>Headers</Tab>
+							<Tab>More</Tab>
+							<div ref='jsTabBorder' className='ReactTabs-border' />
+						</TabList>
 
 
-				{ /* Request data fields */ }
-				<TabPanel>
-					<pre className='codeblock selectable'>
-						{typeof response.body === 'object'?
-							JSON.stringify(response.body, null, 3):
-							response.body}
-					</pre>
-				</TabPanel>
-				{ /* Header fields */ }
-				<TabPanel>
-					<pre className='codeblock selectable'>
-						{typeof response.headers === 'object'?
-							JSON.stringify(response.headers, null, 3):
-							response.headers}
-					</pre>
-				</TabPanel>
-				{ /* Authorization */ }
-				<TabPanel>
-					Something more
-				</TabPanel>
-			</Tabs>
-		</div>
-	</div>
-);
-
-export default ResponseOutput;
+						{ /* Request data fields */ }
+						<TabPanel>
+							<pre className='codeblock selectable'>
+								{typeof this.props.response.body === 'object'?
+									JSON.stringify(this.props.response.body, null, 3):
+									this.props.response.body}
+							</pre>
+						</TabPanel>
+						{ /* Header fields */ }
+						<TabPanel>
+							<pre className='codeblock selectable'>
+								{typeof this.props.response.headers === 'object'?
+									JSON.stringify(this.props.response.headers, null, 3):
+									this.props.response.headers}
+							</pre>
+						</TabPanel>
+						{ /* Authorization */ }
+						<TabPanel>
+							Something more
+						</TabPanel>
+					</Tabs>
+				</div>
+			</div>
+		);
+	}
+}
 
