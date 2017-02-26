@@ -17,12 +17,14 @@ export default class DataFieldList extends React.Component {
 		},
 
 		requstInput__closeBtn: {
-			flex: 1,
-			border: '1px solid #000'
+			flex: 2,
+			color: '#888',
+			fontSize: '.7em',
+			border: '1px solid #ddd'
 		},
 
 		requstInput__field: {
-			flex: 5,
+			flex: 11,
 			border: '1px solid #ddd'
 		},
 	};

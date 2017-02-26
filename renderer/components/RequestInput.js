@@ -6,6 +6,8 @@ import DataFieldList from './DataFieldList';
 
 import colors from '../constants/colors';
 
+Tabs.setUseDefaultStyles(false);
+
 export default class RequestInput extends React.Component {
 
 	static styles= {
@@ -36,14 +38,22 @@ export default class RequestInput extends React.Component {
 		},
 	};
 
+	requestMethods= [
+		'GET', 'POST', 'HEAD', 'PUT', 'DELETE'
+	];
+
+	state= {
+		requestData: [
+			{ key: '', value: '' }
+		]
+	};
+
+
 	constructor(props) {
 		super(props);
-
-		this.state= {
-			requestData: []
-		};
 		
 		this._onSubmitHandler= this._onSubmitHandler.bind(this);
+		this._onTabSelect= this._onTabSelect.bind(this);
 	}
 
 	_onSubmitHandler(e) {
@@ -71,7 +81,41 @@ export default class RequestInput extends React.Component {
 	_updateState(newState) { this.setState(newState); }
 
 
+	componentDidMount() {
+
+		this._onTabSelect(0);
+	}
+
+	_onTabSelect(nextIndex, prevIndex) {
+
+		const $tabs= this.refs.formWrapper.querySelectorAll('.ReactTabs__Tab');
+		const $tabList= this.refs.formWrapper.querySelector('.ReactTabs__TabList');
+		const $tabBorder= this.refs.jsTabBorder;
+
+		const $nextTab= $tabs[nextIndex];
+
+		if($nextTab) {
+
+			const bounds= $nextTab.getBoundingClientRect();
+			const wrapperBounds= $tabList.getBoundingClientRect();
+
+			requestAnimationFrame(() => {
+				
+				$tabBorder.style.transform= `
+					translateX(${bounds.left - wrapperBounds.left}px)
+					scaleX(${bounds.width})
+				`;
+			});
+		}
+	}
+
+
 	render() {
+
+		const requestMethodOptions=
+			this.requestMethods.map((method, i) => (
+				<option value={i} key={i}>{method}</option>
+			));
 
 		return (
 
@@ -80,6 +124,8 @@ export default class RequestInput extends React.Component {
 				<div ref='formWrapper'>
 
 					<div style={RequestInput.styles.urlInputWrapper}>
+
+						<select>{requestMethodOptions}</select>
 
 						<input
 							type='text' name='url'
@@ -90,11 +136,13 @@ export default class RequestInput extends React.Component {
 						<button onClick={this._onSubmitHandler} style={RequestInput.styles.submitBtn}>Submit</button>
 					</div>
 
-					<Tabs>
+
+					<Tabs onSelect={this._onTabSelect}>
 						<TabList>
 							<Tab>Body</Tab>
 							<Tab>Headers</Tab>
 							<Tab>Another one</Tab>
+							<div ref='jsTabBorder' className='ReactTabs-border' />
 						</TabList>
 						
 						<TabPanel>

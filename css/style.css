@@ -73,6 +73,18 @@ input {
 }
 
 
+
+.ReactTabs-border {
+	width:1px;
+	height: 2px;
+	background-color: #51e;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	transform-origin: left top;
+	transition: transform .2s ease-in-out;
+}
+
 .ReactTabs {
 	margin: 1em auto;
 	border-bottom: 1px solid #bbb;
@@ -81,16 +93,20 @@ input {
 
 .ReactTabs__TabList {
 	border-bottom: 2px solid #eee;
+	display: flex;
+	flex-direction: row;
+	position: relative;
 }
 
 .ReactTabs__Tab {
-	
+	padding: .7em 1em;
+	cursor: pointer;
+	transition: background .2s ease-in-out;
 }
 
 .ReactTabs__Tab--selected {
-	background: #eee !important;
+	background: rgba(0,0,0,.05) !important;
 	border-radius: 0 !important;
-
 }
 
 .ReactTabs__TabPanel {
