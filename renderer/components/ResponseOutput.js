@@ -7,12 +7,21 @@ import RequestInput from './RequestInput';
 
 export default class ResponseOutput extends React.Component {
 
+	static styles= {
+		responseOutput: {
+			fontSize: '.7em',
+			position: 'relative',
+			maxWidth: 'calc(100vw - 320px)',
+			padding: '1em',
+		}
+	};
+
 	componentDidMount() {
 		this.onTabSelect(0);
 	}
 
 	onTabSelect(i, j) {
-		this.props.onTabSelect(0, null, this);
+		this.props.onTabSelect(i, j, this);
 	}
 
 	render() {
@@ -34,20 +43,22 @@ export default class ResponseOutput extends React.Component {
 
 						{ /* Request data fields */ }
 						<TabPanel>
-							<pre className='codeblock selectable'>
+							<pre className='codeblock selectable' style={ResponseOutput.styles.responseOutput}>
 								{typeof this.props.response.body === 'object'?
 									JSON.stringify(this.props.response.body, null, 3):
 									this.props.response.body}
 							</pre>
 						</TabPanel>
+
 						{ /* Header fields */ }
 						<TabPanel>
-							<pre className='codeblock selectable'>
+							<pre className='codeblock selectable' style={ResponseOutput.styles.responseOutput}>
 								{typeof this.props.response.headers === 'object'?
 									JSON.stringify(this.props.response.headers, null, 3):
 									this.props.response.headers}
 							</pre>
 						</TabPanel>
+
 						{ /* Authorization */ }
 						<TabPanel>
 							Something more

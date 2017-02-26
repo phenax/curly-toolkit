@@ -20,17 +20,22 @@ export default class App extends React.Component {
 		sidebar: {
 			background: `linear-gradient(-180deg, #34b8be 10%, ${colors.accent_blue} 50%)`,
 			width: '300px',
-			minHeight: '100vh'
+			minHeight: '100vh',
 		},
 
 		handle: {
 			WebkitAppRegion: 'drag',
-			width: '100%',
 			padding: '1em 2em',
 			color: '#fff',
+			width: '100%',
 			fontFamily: 'Roboto Condensed',
 			backgroundColor: colors.primary,
 			boxShadow: '0 2px 4px 1px rgba(0, 0, 0, 0.14)',
+			// position: 'fixed',
+			// top: 0,
+			// right: 0,
+			// zIndex: 10,
+			// width: 'calc(100vw - 300px)',
 		},
 
 		content: {

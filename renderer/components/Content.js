@@ -42,6 +42,8 @@ export default class Content extends React.Component {
 
 		if($nextTab) {
 
+			console.log($tabList, $nextTab);
+
 			const bounds= $nextTab.getBoundingClientRect();
 
 			// Wait for the next frame
