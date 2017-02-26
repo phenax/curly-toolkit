@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import DataFieldList from './DataFieldList';
 
 import Fetcher from '../utils/Fetcher';
+import store from '../utils/Storage';
 
 import colors from '../constants/colors';
 
@@ -77,10 +78,7 @@ export default class RequestInput extends React.Component {
 		],
 		headers: [
 			{ key: '', value: '' },
-		],
-		response: {
-
-		}
+		]
 	};
 
 
@@ -91,6 +89,33 @@ export default class RequestInput extends React.Component {
 		
 		this._onSubmitHandler= this._onSubmitHandler.bind(this);
 		this.onTabSelect= this.onTabSelect.bind(this);
+	}
+
+	componentDidMount() {
+		this.onTabSelect(0);
+
+		const headers= store.get('headers') || {};
+		const requestBody= store.get('requestBody') || {};
+		const method= store.get('method') || 0;
+		const url= store.get('url') || '';
+
+		this.refs.urlField.value= url;
+		this.refs.methodField.value= method;
+
+		const newHeaders= [];
+		const newBody= [];
+
+		for(let key in headers)
+			newHeaders.push({ key, value: headers[key] });
+
+		for(let key in requestBody)
+			newBody.push({ key, value: requestBody[key] });
+
+		if(newHeaders.length)
+			this.setState({ headers: newHeaders });
+
+		if(newBody.length)
+			this.setState({ requestData: newBody });
 	}
 
 	// Form submit handler(Submit button click)
@@ -106,12 +131,15 @@ export default class RequestInput extends React.Component {
 			headers: Fetcher.hashMapify(this.state.headers),
 		};
 
+		store.set('url', request.url);
+		store.set('method', this.refs.methodField.value);
+		store.set('headers', request.headers);
+		store.set('requestBody', request.body);
+
 		this.props.onSubmit(request);
 	}
 
 	updateState(newState) { this.setState(newState); }
-
-	componentDidMount() { this.onTabSelect(0); }
 
 
 	onTabSelect(nextIndex, prevIndex) {
