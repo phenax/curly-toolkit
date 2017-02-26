@@ -55,7 +55,7 @@ export default class App extends React.Component {
 
 				<div style={App.styles.content}>
 
-					<div style={App.styles.handle}>Curly</div>
+					<div style={App.styles.handle}>Curly Toolkit</div>
 
 					<Content />
 

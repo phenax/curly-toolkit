@@ -2,6 +2,7 @@
 
 import React from 'react';
 
+import colors from '../constants/colors';
 
 export default class DataFieldList extends React.Component {
 
@@ -14,47 +15,51 @@ export default class DataFieldList extends React.Component {
 		requstInput: {
 			display: 'flex',
 			flexDirection: 'row',
+			marginBottom: '.3em',
 		},
 
 		requstInput__closeBtn: {
-			flex: 2,
-			color: '#888',
+			width: '40px',
 			fontSize: '.7em',
-			border: '1px solid #ddd'
+			backgroundColor: colors.primary,
+			color: '#fff',
 		},
 
 		requstInput__field: {
 			flex: 11,
-			border: '1px solid #ddd'
+			border: '1px solid #ddd',
+			padding: '.4em .8em',
+		},
+
+		addFieldBtn: {
+			padding: '.6em 1em',
+			backgroundColor: colors.accent_blue,
+			color: '#fff',
+			fontFamily: 'Roboto Condensed',
 		},
 	};
 
-	constructor(props) {
-		super(props);
 
+	mutateRequestFields(fn) {
 
-	}
+		const list= Array.from(this.props.list);
 
-	_mutateRequestFields(fn) {
+		fn(list);
 
-		const requestData= Array.from(this.props.requestData);
-
-		fn(requestData);
-
-		this.props.updateState({ requestData });
+		this.props.updateState({ [this.props.type]: list });
 	}
 
 
-	_addRequestField() {
-		this._mutateRequestFields(fields => fields.push({ key: '', value: '' }));
+	addField() {
+		this.mutateRequestFields(fields => fields.push({ key: '', value: '' }));
 	}	
 
-	_removeRequestField(i) {
-		this._mutateRequestFields(fields => fields.splice(i, 1));
+	removeField(i) {
+		this.mutateRequestFields(fields => fields.splice(i, 1));
 	}
 
-	_requestValueChange(i, target, e) {
-		this._mutateRequestFields( fields => fields[i][target]= e.currentTarget.value );
+	inputValueChange(i, target, e) {
+		this.mutateRequestFields( fields => fields[i][target]= e.currentTarget.value );
 	}
 
 
@@ -66,7 +71,7 @@ export default class DataFieldList extends React.Component {
 
 				<ul style={DataFieldList.styles.list}>
 
-					{this.props.requestData.map((data, i) => (
+					{this.props.list.map((data, i) => (
 
 						<li key={i} style={DataFieldList.styles.requstInput}>
 
@@ -75,7 +80,7 @@ export default class DataFieldList extends React.Component {
 								type='text'
 								className='js-data__key'
 								placeholder='Key'
-								onChange={this._requestValueChange.bind(this, i, 'key')}
+								onChange={this.inputValueChange.bind(this, i, 'key')}
 								value={data.key}
 							/>
 							<input
@@ -83,13 +88,13 @@ export default class DataFieldList extends React.Component {
 								type='text'
 								className='js-data__value'
 								placeholder='Value'
-								onChange={this._requestValueChange.bind(this, i, 'value')}
+								onChange={this.inputValueChange.bind(this, i, 'value')}
 								value={data.value}
 							/>
 
 							<button
 								style={DataFieldList.styles.requstInput__closeBtn}
-								onClick={this._removeRequestField.bind(this, i)}
+								onClick={this.removeField.bind(this, i)}
 								className='fa fa-close'
 							/>
 
@@ -97,7 +102,14 @@ export default class DataFieldList extends React.Component {
 					))}
 				</ul>
 
-				<button onClick={this._addRequestField.bind(this)}>Add field</button>
+				<div style={{ textAlign: 'right', fontSize: '.8em', }}>
+					<button
+						style={DataFieldList.styles.addFieldBtn}
+						onClick={this.addField.bind(this)}>
+						<i className='fa fa-plus fa--padd' />
+						Add field
+					</button>
+				</div>
 			</div>
 		);
 	}

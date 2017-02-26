@@ -18,7 +18,7 @@ html, body {
 
 :root {
 	font-size: 16px;
-	color: #333;
+	color: #555;
 	font-family: Roboto, sans-serif;
 	-webkit-user-select: none;
 }
@@ -44,6 +44,17 @@ input {
 	border: none;
 	outline: none;
 	background-color: transparent;
+}
+
+select {
+	border: none;
+	outline: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+option {
+	padding: 1em;
 }
 
 .sidebar-btn {
@@ -72,12 +83,17 @@ input {
 	opacity: 1;
 }
 
+.fa--padd {
+	padding-right: .5em;
+}
+
+
 
 
 .ReactTabs-border {
 	width:1px;
 	height: 2px;
-	background-color: #51e;
+	background-color: #3498db;
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -86,13 +102,12 @@ input {
 }
 
 .ReactTabs {
-	margin: 1em auto;
-	border-bottom: 1px solid #bbb;
+	margin: 0 auto;
 	opacity: .99;
 }
 
 .ReactTabs__TabList {
-	border-bottom: 2px solid #eee;
+	border-bottom: 1px solid #ddd;
 	display: flex;
 	flex-direction: row;
 	position: relative;
@@ -105,7 +120,7 @@ input {
 }
 
 .ReactTabs__Tab--selected {
-	background: rgba(0,0,0,.05) !important;
+	background: rgba(0,0,0,.08) !important;
 	border-radius: 0 !important;
 }
 
