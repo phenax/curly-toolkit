@@ -107,7 +107,14 @@ export default class RequestInput extends React.Component {
 		const fetcher= new Fetcher(request);
 
 		fetcher
-			.send('json')
+			.send()
+			.then(response => {
+
+				console.log(response.status);
+				console.log(response.headers.get('Content-Type'));
+
+				return response.json();
+			})
 			.then(response => {
 
 				console.log(response);
@@ -117,10 +124,8 @@ export default class RequestInput extends React.Component {
 
 	updateState(newState) { this.setState(newState); }
 
-	componentDidMount() {
+	componentDidMount() { this.onTabSelect(0); }
 
-		this.onTabSelect(0);
-	}
 
 	onTabSelect(nextIndex, prevIndex) {
 

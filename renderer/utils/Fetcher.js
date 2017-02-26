@@ -5,29 +5,57 @@ import url from 'url';
 
 export default class Fetched {
 
+	/**
+	 * Convert an array of objects with key and value([ { key: '', value: '' } ]) to an object
+	 * 
+	 * @param  {Array}   array
+	 * 
+	 * @return {Object}
+	 */
 	static hashMapify(array) {
 
 		const obj= {};
 
 		array.forEach((field, i) => {
-			if(!!field.key && !!field.value)
+
+			if(!!field.key && !!field.value) {
+
 				obj[field.key]= field.value;
+			}
+
 		});
 
 		return obj;
 	}
 
+
+	/**
+	 * Sanitize the headers to be sent
+	 * 
+	 * @param  {Object}   headers
+	 * 
+	 * @return {Headers}
+	 */
 	static sanitizeHeaders(headers) {
 
-		const SANITIZE_REGEX= /\s/gi;
+		const SANITIZATION_REGEX= /\s/gi;
 
 		for(let key in headers) {
-			key.replace(SANITIZE_REGEX, '-');
+			key.replace(SANITIZATION_REGEX, '-');
 		}
 
 		return new Headers(headers);
 	}
 
+
+
+	/**
+	 * Sanitize the request
+	 * 
+	 * @param  {Object}   request
+	 * 
+	 * @return {Request}
+	 */
 	static sanitizeRequest(request) {
 		request= assign({}, request);
 
@@ -38,21 +66,32 @@ export default class Fetched {
 			const query= assign(reqUrl.query, request.body);
 			const queryStr= queryString.stringify(reqUrl.query);
 
-			request.url= (reqUrl.protocol || 'http:') + '//' + reqUrl.host + reqUrl.pathname + '?' + queryStr;
+			request.url=
+				`${(reqUrl.protocol || 'http:')}//${reqUrl.host + reqUrl.pathname}?${queryStr}`;
 		}
 
 		return new Request(request.url, request);
 	}
 
+
+	/**
+	 * @param  {Object} request
+	 */
 	constructor(request) {
 
 		this.request= Fetched.sanitizeRequest(request);
 	}
 
 
-	send(type, _fetch=fetch) {
+	/**
+	 * Send the fetch request
+	 * 
+	 * @param  {Function} _fetch  Dependency inject
+	 * 
+	 * @return {Promise}          Resolves the network response
+	 */
+	send(_fetch=fetch) {
 
-		return fetch(this.request)
-			.then(res => res[type]? res[type](): res.text());
+		return fetch(this.request);
 	}
 }
