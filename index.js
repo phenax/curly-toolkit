@@ -25,16 +25,14 @@ let mainWindow;
 const initMainWindow= () => {
 
 	mainWindow= new BrowserWindow({
-		width: 800,
+		width: 1000,
 		height: 600,
-		frame: false,
+		// frame: false,
 		transparent: true,
 		titleBarStyle: 'hidden',
 	});
 
 	// mainWindow.maximize();
-
-	// mainWindow.webContents.openDevTools();
 
 	mainWindow.loadURL(url.format({
 		pathname: path.resolve('html', 'index.html'),

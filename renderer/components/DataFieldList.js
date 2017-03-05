@@ -29,6 +29,7 @@ export default class DataFieldList extends React.Component {
 			flex: 11,
 			border: '1px solid #ddd',
 			padding: '.4em .8em',
+			color: '#555',
 		},
 
 		addFieldBtn: {
@@ -59,7 +60,7 @@ export default class DataFieldList extends React.Component {
 	}
 
 	inputValueChange(i, target, e) {
-		this.mutateRequestFields( fields => fields[i][target]= e.currentTarget.value );
+		this.mutateRequestFields(fields => fields[i][target]= e.currentTarget.value);
 	}
 
 

@@ -52,8 +52,41 @@ export default class App extends React.Component {
 		},
 	};
 
+	constructor(props) {
+		super(props);
+		
+		this.state= {
+			page: '/',
+		};
+
+		this.onHashChange= this.onHashChange.bind(this);
+		this.goTo= this.goTo.bind(this);
+	}
+
+	componentDidMount() {
+		window.addEventListener('hashchange', this.onHashChange);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('hashchange', this.onHashChange);
+	}
+
+	onHashChange() {
+
+		const page= window.location.hash;
+
+		this.goTo(page);
+	}
+
+	goTo(page) {
+
+		this.setState({ page });
+	}
+
 
 	render() {
+
+		console.log(this.state.page);
 
 		return (
 
