@@ -1,16 +1,19 @@
 
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { actions } from '../store/actions';
 
 import colors from '../constants/colors';
 
 import Sidebar from './Sidebar';
 import Content from './Content';
 
-const dimens= {
+const mapper= state => ({
+	url: state.router.url
+});
 
-};
-
-export default class App extends React.Component {
+class App extends React.Component {
 
 	static sidebarWidth= '250px';
 	static contentWidth= `calc(100vw - ${App.sidebarWidth})`;
@@ -60,7 +63,6 @@ export default class App extends React.Component {
 		};
 
 		this.onHashChange= this.onHashChange.bind(this);
-		this.goTo= this.goTo.bind(this);
 	}
 
 	componentDidMount() {
@@ -73,20 +75,13 @@ export default class App extends React.Component {
 
 	onHashChange() {
 
-		const page= window.location.hash;
+		const page= window.location.hash.slice(1, window.location.hash.length);
 
-		this.goTo(page);
-	}
-
-	goTo(page) {
-
-		this.setState({ page });
+		this.props.dispatch(actions.triggerRoute(page));
 	}
 
 
 	render() {
-
-		console.log(this.state.page);
 
 		return (
 
@@ -100,7 +95,7 @@ export default class App extends React.Component {
 
 				<div style={App.styles.content}>
 
-					<div style={App.styles.handle}>Curly Toolkit</div>
+					<div style={App.styles.handle}>Curly Toolkit - {this.props.url}</div>
 
 					<Content />
 
@@ -110,3 +105,5 @@ export default class App extends React.Component {
 		);
 	}
 }
+
+export default connect(mapper)(App);

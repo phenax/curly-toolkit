@@ -95,25 +95,25 @@ export default class Sidebar extends React.Component {
 
 				<ul style={Sidebar.styles.list}>
 					<li>
-						<button
+						<a href='#/coolboy'
 							className='sidebar-btn'
 							style={Sidebar.styles.list__item}>
 							Home
-						</button>
+						</a>
 					</li>
 					<li>
-						<button
+						<a href='#/coolboy---1'
 							className='sidebar-btn'
 							style={Sidebar.styles.list__item}>
 							Coolness
-						</button>
+						</a>
 					</li>
 					<li>
-						<button
+						<a href='#/coo---boy'
 							className='sidebar-btn'
 							style={Sidebar.styles.list__item}>
 							Wowlo
-						</button>
+						</a>
 					</li>
 				</ul>
 
