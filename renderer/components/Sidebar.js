@@ -46,6 +46,7 @@ export default class Sidebar extends React.Component {
 			fontSize: '.9em',
 			fontFamily: 'Roboto Condensed',
 			textTransform: 'uppercase',
+			textDecoration: 'none',
 		}
 	};
 

@@ -9,9 +9,9 @@ import colors from '../constants/colors';
 import Sidebar from './Sidebar';
 import Content from './Content';
 
-const mapper= state => ({
-	url: state.router.url
-});
+
+const mapper= state => ({ url: state.router.url });
+
 
 class App extends React.Component {
 
@@ -89,7 +89,7 @@ class App extends React.Component {
 
 				<div style={App.styles.sidebar}>
 
-					<Sidebar />
+					<Sidebar url={this.props.url} />
 
 				</div>
 

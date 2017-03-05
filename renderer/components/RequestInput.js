@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { connect } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import DataFieldList from './DataFieldList';
@@ -9,7 +10,11 @@ import store from '../utils/Storage';
 
 import colors from '../constants/colors';
 
-export default class RequestInput extends React.Component {
+
+const mapper= state => ({ request: state.request });
+
+
+class RequestInput extends React.Component {
 
 	static styles= {
 
@@ -217,3 +222,5 @@ export default class RequestInput extends React.Component {
 		);
 	}
 }
+
+export default connect(mapper)(RequestInput);
