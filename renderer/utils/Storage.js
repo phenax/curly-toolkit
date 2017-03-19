@@ -22,7 +22,9 @@ export default new (class Storage {
 
 		try {
 			value= JSON.parse(value);
-		} catch(e) {}
+		} catch(e) {
+			console.log(e.message);
+		}
 
 		return value;
 	}

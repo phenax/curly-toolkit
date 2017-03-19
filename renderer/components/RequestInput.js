@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import DataFieldList from './DataFieldList';
+import AuthInput from './AuthInput';
 
 import Fetcher from '../utils/Fetcher';
-import store from '../utils/Storage';
+import datastorage from '../utils/Storage';
 
 import colors from '../constants/colors';
 
@@ -99,10 +100,10 @@ class RequestInput extends React.Component {
 	componentDidMount() {
 		this.onTabSelect(0);
 
-		const headers= store.get('headers') || {};
-		const requestBody= store.get('requestBody') || {};
-		const method= store.get('method') || 0;
-		const url= store.get('url') || '';
+		const headers= datastorage.get('headers') || {};
+		const requestBody= datastorage.get('requestBody') || {};
+		const method= datastorage.get('method') || 0;
+		const url= datastorage.get('url') || '';
 
 		this.refs.urlField.value= url;
 		this.refs.methodField.value= method;
@@ -136,10 +137,10 @@ class RequestInput extends React.Component {
 			headers: Fetcher.hashMapify(this.state.headers),
 		};
 
-		store.set('url', request.url);
-		store.set('method', this.refs.methodField.value);
-		store.set('headers', request.headers);
-		store.set('requestBody', request.body);
+		datastorage.set('url', request.url);
+		datastorage.set('method', this.refs.methodField.value);
+		datastorage.set('headers', request.headers);
+		datastorage.set('requestBody', request.body);
 
 		this.props.onSubmit(request);
 	}
@@ -212,11 +213,13 @@ class RequestInput extends React.Component {
 							</TabPanel>
 							{ /* Authorization */ }
 							<TabPanel>
-								Something
+								<AuthInput
+									headers={this.state.headers}
+									updateState={this.updateState.bind(this)}
+								/>
 							</TabPanel>
 						</Tabs>
 					</div>
-
 				</div>
 			</div>
 		);
