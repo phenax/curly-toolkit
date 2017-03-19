@@ -84,7 +84,12 @@ class RequestInput extends React.Component {
 		],
 		headers: [
 			{ key: '', value: '' },
-		]
+		],
+		auth: {
+			user: '',
+			pass: '',
+			type: 0,
+		}
 	};
 
 
@@ -102,6 +107,7 @@ class RequestInput extends React.Component {
 
 		const headers= datastorage.get('headers') || {};
 		const requestBody= datastorage.get('requestBody') || {};
+		const auth= datastorage.get('auth') || {};
 		const method= datastorage.get('method') || 0;
 		const url= datastorage.get('url') || '';
 
@@ -122,6 +128,9 @@ class RequestInput extends React.Component {
 
 		if(newBody.length)
 			this.setState({ requestData: newBody });
+
+		if(auth.keys().length)
+			this.setState({ auth });
 	}
 
 	// Form submit handler(Submit button click)
@@ -140,6 +149,7 @@ class RequestInput extends React.Component {
 		datastorage.set('url', request.url);
 		datastorage.set('method', this.refs.methodField.value);
 		datastorage.set('headers', request.headers);
+		datastorage.set('auth', request.auth);
 		datastorage.set('requestBody', request.body);
 
 		this.props.onSubmit(request);
@@ -215,6 +225,7 @@ class RequestInput extends React.Component {
 							<TabPanel>
 								<AuthInput
 									headers={this.state.headers}
+									initialAuth={this.state.auth}
 									updateState={this.updateState.bind(this)}
 								/>
 							</TabPanel>

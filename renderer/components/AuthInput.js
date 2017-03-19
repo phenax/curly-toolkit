@@ -55,6 +55,15 @@ export default class AuthInput extends React.Component {
 
 			const authValue= new Buffer(`${uname}:${pass}`).toString('base64');
 
+			const authIndex=
+				this.props.headers.findIndex(
+					header => header.key.toLowerCase() === 'authorization'
+				);
+
+			if(authIndex !== -1) {
+				this.props.headers.splice(authIndex, 1);
+			}
+
 			// SET HEADER Authorization: Basic ${authValue}
 			this.props.headers.push({
 				key: 'Authorization',
@@ -71,6 +80,30 @@ export default class AuthInput extends React.Component {
 	} ];
 
 
+	constructor(props) {
+		super(props);
+		
+		this.inputChange= this.inputChange.bind(this);
+	}
+
+	// Get the input field values
+	get authData() { return new FormData(this.refs.authForm); }
+
+
+	/**
+	 * Input change handler
+	 * 
+	 * @param  {String} key  The field that changed
+	 */
+	inputChange(key) {
+
+		const auth= Object.assign({}, this.props.initialAuth);
+
+		auth[key]= this.authData.get(key);
+
+		this.props.updateState({ auth });
+	}
+
 
 	/**
 	 * Form submit handler
@@ -81,10 +114,10 @@ export default class AuthInput extends React.Component {
 
 		e.preventDefault();
 
-		const data= new FormData(e.currentTarget);
+		const data= this.authData;
 
-		const username= data.get('username');
-		const password= data.get('password');
+		const username= data.get('user');
+		const password= data.get('pass');
 
 		const authType= this.authTypes[parseInt(data.get('type'))];
 
@@ -99,23 +132,35 @@ export default class AuthInput extends React.Component {
 
 				<div style={AuthInput.styles.wrapper}>
 
-					<form onSubmit={this.onFormSubmit.bind(this)}>
+					<form onSubmit={this.onFormSubmit.bind(this)} ref={'authForm'}>
 
-						<select style={AuthInput.styles.textField} name='type'>
+						<select
+							style={AuthInput.styles.textField}
+							name='type'
+							onChange={_ => this.inputChange('type')}
+							value={this.props.initialAuth.type}>
 							{this.authTypes.map((type, i) => 
-								<option style={AuthInput.styles.option} value={i}>{type.name}</option>
+								<option
+									style={AuthInput.styles.option}
+									key={i} value={i}>
+									{type.name}
+								</option>
 							)}
 						</select>
 
 						<input
 							placeholder='Username'
 							style={AuthInput.styles.textField}
-							type='text' name='username'
+							type='text' name='user'
+							value={this.props.initialAuth.user}
+							onChange={_ => this.inputChange('user')}
 						/>
 						<input
 							placeholder='*********'
 							style={AuthInput.styles.textField}
-							type='password' name='password'
+							type='password' name='pass'
+							value={this.props.initialAuth.pass}
+							onChange={_ => this.inputChange('pass')}
 						/>
 
 						<div style={AuthInput.styles.action}>
