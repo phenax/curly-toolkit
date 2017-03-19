@@ -8,13 +8,10 @@ const initialStates= {
 	},
 
 	request: {
-		body: [ { key: '', value: '' } ],
-		headers: [ { key: '', value: '' } ],
-		auth: {
-			type: 'NO_AUTH',
-			params: [],
-		}
-	}
+		body: [ { key: '', value: '', }, ],
+		headers: [ { key: '', value: '', }, ],
+		auth: { type: 0, user: '', pass: '', }
+	},
 };
 
 export const router= (state=initialStates.router, action) => {

@@ -129,7 +129,7 @@ class RequestInput extends React.Component {
 		if(newBody.length)
 			this.setState({ requestData: newBody });
 
-		if(auth.keys().length)
+		if(Object.keys(auth).length)
 			this.setState({ auth });
 	}
 
@@ -144,6 +144,7 @@ class RequestInput extends React.Component {
 			method:  this.requestMethods[this.refs.methodField.value],
 			body:    Fetcher.hashMapify(this.state.requestData),
 			headers: Fetcher.hashMapify(this.state.headers),
+			auth: this.state.auth,
 		};
 
 		datastorage.set('url', request.url);

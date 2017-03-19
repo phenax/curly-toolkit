@@ -1,14 +1,14 @@
 
 import React from 'react';
 
-import RequestInput from './RequestInput';
-import ResponseOutput from './ResponseOutput';
+import RequestInput from '../RequestInput';
+import ResponseOutput from '../ResponseOutput';
 
-import Fetcher from '../utils/Fetcher';
+import Fetcher from '../../utils/Fetcher';
 
-import colors from '../constants/colors';
+import colors from '../../constants/colors';
 
-export default class Content extends React.Component {
+export default class Client extends React.Component {
 
 	static styles= {
 
@@ -99,9 +99,9 @@ export default class Content extends React.Component {
 
 		return (
 
-			<div style={Content.styles.wrapper}>
+			<div style={Client.styles.wrapper}>
 
-				<div style={Content.styles.container}>
+				<div style={Client.styles.container}>
 
 					<RequestInput
 						onSubmit={this.onSubmit}

@@ -27,7 +27,7 @@ const initMainWindow= () => {
 	mainWindow= new BrowserWindow({
 		width: 1000,
 		height: 600,
-		// frame: false,
+		frame: false,
 		transparent: true,
 		titleBarStyle: 'hidden',
 	});

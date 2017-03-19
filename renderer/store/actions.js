@@ -1,9 +1,14 @@
 
 export const TYPES= {
 	HASH_CHANGE: 'HASH_CHANGE',
+	REQUEST_BODY_CHANGE: 'REQUEST_BODY_CHANGE',
+	REQUEST_HEADER_CHANGE: 'REQUEST_HEADER_CHANGE',
+	REQUEST_AUTH_CHANGE: 'REQUEST_AUTH_CHANGE',
 };
 
 export const actions= {
 
 	triggerRoute: url => ({ type: TYPES.HASH_CHANGE, url }),
+
+
 };

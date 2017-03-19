@@ -65,6 +65,21 @@ export default class Sidebar extends React.Component {
 	_maximizeBtnClickHandler() { ipcRenderer.send('max-main-window'); }
 
 
+	getLinkStyle(url) {
+
+		const style= Sidebar.styles.list__item;
+
+		if(this.props.url === url) {
+			// Mutate style
+			return Object.assign({}, style, {
+				backgroundColor: 'rgba(255,255,255,.4)'
+			});
+		}
+
+		return style;
+	}
+
+
 	render() {
 
 		return (
@@ -96,23 +111,23 @@ export default class Sidebar extends React.Component {
 
 				<ul style={Sidebar.styles.list}>
 					<li>
-						<a href='#/coolboy'
+						<a href='#/'
 							className='sidebar-btn'
-							style={Sidebar.styles.list__item}>
-							Home
+							style={this.getLinkStyle('/')}>
+							Client
 						</a>
 					</li>
 					<li>
-						<a href='#/coolboy---1'
+						<a href='#/server'
 							className='sidebar-btn'
-							style={Sidebar.styles.list__item}>
-							Coolness
+							style={this.getLinkStyle('/server')}>
+							Server
 						</a>
 					</li>
 					<li>
-						<a href='#/coo---boy'
+						<a href='#/test'
 							className='sidebar-btn'
-							style={Sidebar.styles.list__item}>
+							style={this.getLinkStyle('/test')}>
 							Wowlo
 						</a>
 					</li>

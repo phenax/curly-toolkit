@@ -7,7 +7,8 @@ import { actions } from '../store/actions';
 import colors from '../constants/colors';
 
 import Sidebar from './Sidebar';
-import Content from './Content';
+import Client from './pages/Client';
+import Server from './pages/Server';
 
 
 const mapper= state => ({ url: state.router.url });
@@ -57,10 +58,6 @@ class App extends React.Component {
 
 	constructor(props) {
 		super(props);
-		
-		this.state= {
-			page: '/',
-		};
 
 		this.onHashChange= this.onHashChange.bind(this);
 	}
@@ -83,6 +80,8 @@ class App extends React.Component {
 
 	render() {
 
+
+
 		return (
 
 			<div style={App.styles.container}>
@@ -97,13 +96,47 @@ class App extends React.Component {
 
 					<div style={App.styles.handle}>Curly Toolkit - {this.props.url}</div>
 
-					<Content />
+
+					{this.routes.map((route, i) => 
+						<div style={this.getRouteStyle(route)} regex={route.regex} key={i}>
+							<route.Component />
+						</div>
+					)}
 
 				</div>
 
 			</div>
 		);
 	}
+
+	getRouteStyle(route) {
+
+		if(route.regex.test(this.props.url)) {
+
+			if(typeof route.action === 'function') {
+				route.action(this.props.url);
+			}
+
+			return {
+				display: 'block',
+			};
+		}
+
+		return {
+			display: 'none'
+		};
+	}
+
+	routes= [
+		{
+			Component: Client,
+			regex: /^\/$/,
+		},
+		{
+			Component: Server,
+			regex: /^\/server$/,
+		},
+	];
 }
 
 export default connect(mapper)(App);
